@@ -91,7 +91,9 @@ class RPCServer(object):
 
     def start(self):
         self.__server.start()
-        self.__server.wait()
+	import eventlet
+	e = eventlet.event.Event()
+        e.wait()
 
 
 def setup():
