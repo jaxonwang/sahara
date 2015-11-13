@@ -44,3 +44,8 @@ def _get_workers():
         workers.append(w)
 
     return workers
+
+
+def get_support_versions():
+    # TODO:(jxwang) Add '5.5.0'
+    return ['5', '5.3.0', '5.4.0']
