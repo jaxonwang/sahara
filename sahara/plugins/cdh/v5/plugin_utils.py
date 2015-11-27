@@ -44,20 +44,3 @@ class PluginUtilsV5(pu.AbstractPluginUtils):
             r.execute_command(
                 'sudo su - -c "hdfs dfs -chmod 1777 /user/spark/'
                 'applicationHistory" hdfs')
-
-    def create_hive_hive_directory(self, cluster):
-        # Hive requires /tmp/hive-hive directory
-        namenode = self.get_namenode(cluster)
-        with namenode.remote() as r:
-            r.execute_command(
-                'sudo su - -c "hadoop fs -mkdir -p /tmp/hive-hive" hdfs')
-            r.execute_command(
-                'sudo su - -c "hadoop fs -chown hive /tmp/hive-hive" hdfs')
-
-    def start_cloudera_manager(self, cluster):
-        self._start_cloudera_manager(
-            cluster, c_helper.AWAIT_MANAGER_STARTING_TIMEOUT)
-
-    def get_config_value(self, service, name, cluster=None):
-        configs = c_helper.get_plugin_configs()
-        return self._get_config_value(service, name, configs, cluster)

@@ -385,3 +385,11 @@ class AbstractPluginUtils(object):
         provider = CDHPluginAutoConfigsProvider(
             AUTO_CONFIGURATION_SCHEMA, plugin_configs, cluster, scaling)
         provider.apply_recommended_configs()
+
+    def start_cloudera_manager(self, cluster):
+        self._start_cloudera_manager(
+            cluster, self.c_helper.AWAIT_MANAGER_STARTING_TIMEOUT)
+
+    def get_config_value(self, service, name, cluster=None):
+        configs = self.c_helper.get_plugin_configs()
+        return self._get_config_value(service, name, configs, cluster)
