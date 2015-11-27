@@ -16,63 +16,103 @@
 import mock
 import testtools
 
-from sahara.plugins.cdh.v5_3_0 import cloudera_utils as cu
+from sahara.plugins.cdh import cloudera_utils as cu
+from sahara.plugins import exceptions as ex
 from sahara.tests.unit import base
 from sahara.tests.unit.plugins.cdh import utils as ctu
 
-
-CU = cu.ClouderaUtilsV530()
-
+def patch_cluster_progress_ops(f):
+    def warp(*args, **kwargs):
+        # if CONF.disable_event_log will be True
+        with mock.patch('sahara.config.CONF.disable_event_log'):
+            f(*args, **kwargs)
+    return warp
 
 class ClouderaUtilsTestCase(base.SaharaTestCase):
-    @mock.patch('sahara.plugins.cdh.v5_3_0.cloudera_utils.ClouderaUtilsV530.'
-                'get_cloudera_cluster')
-    def test_get_service(self, mock_get_cl_cluster):
-        self.assertRaises(ValueError, CU.get_service_by_role, 'NAMENODE')
+
+    def setUp(self):
+        super(ClouderaUtilsTestCase, self).setUp()
+        self.CU = cu.ClouderaUtils()
+
+    def test_cloudera_cmd(self):
+        def _get_function_yield(result_success=False,
+                                result_children=None):
+            cmd = mock.Mock()
+            cmd.wait().success = result_success
+            cmd.wait().children = result_children
+            return cmd
+
+        sucessful_cmd = _get_function_yield(result_success=True)
+        failed_cmd = _get_function_yield(result_success=False)
+        successful_child = mock.Mock()
+        successful_child.success = True
+        failed_child = mock.Mock()
+        failed_child.success = False
+        failed_cmd_with_children = _get_function_yield(
+            result_success=False,
+            result_children=[successful_child,
+                             failed_child])
+
+        function = mock.MagicMock(return_value=[sucessful_cmd])
+        function.__name__ = "a_mock_function"  # needed for functools.wraps
+        cu.cloudera_cmd(function)()  # should not raise
+        function.return_value = [sucessful_cmd, failed_cmd]
+        self.assertRaises(ex.HadoopProvisionError,
+                          cu.cloudera_cmd(function))
+        function.return_value = [failed_cmd_with_children]
+        self.assertRaises(ex.HadoopProvisionError,
+                          cu.cloudera_cmd(function))
+
+    @mock.patch('sahara.config.CONF.disable_event_log')
+    @mock.patch('sahara.conductor.API.cluster_update')
+    @mock.patch('sahara.conductor.API.cluster_get')
+    @mock.patch('sahara.plugins.cdh.cloudera_utils.api_client.ApiResource')
+    def test_update_configs(self, ApiResource, cluster_get,
+            cluster_update, cfg):
+        cluster = ctu.get_fake_cluster()
+        instances = cluster.node_groups[1].instances
+        import pdb;pdb.set_trace()
+        self.CU.update_configs(instances)
+
+    def test_get_service(self):
+        self.CU.get_cloudera_cluster = mock.MagicMock(return_value = None)
+        self.assertRaises(ValueError, self.CU.get_service_by_role, 'NAMENODE')
 
         cluster = ctu.get_fake_cluster()
         inst = cluster.node_groups[0].instances[0]
-        mock_get_cl_cluster.return_value = None
+        self.CU.get_cloudera_cluster.return_value = None
 
-        self.assertRaises(ValueError, CU.get_service_by_role, 'spam',
+        self.assertRaises(ValueError, self.CU.get_service_by_role, 'spam',
                           cluster)
-        self.assertRaises(ValueError, CU.get_service_by_role, 'spam',
+        self.assertRaises(ValueError, self.CU.get_service_by_role, 'spam',
                           instance=inst)
 
-        mock_get_cl_cluster.reset_mock()
+        self.CU.get_cloudera_cluster.reset_mock()
 
         mock_get_service = mock.MagicMock()
         mock_get_service.get_service.return_value = mock.Mock()
-        mock_get_cl_cluster.return_value = mock_get_service
+        self.CU.get_cloudera_cluster.return_value = mock_get_service
 
-        CU.get_service_by_role('NAMENODE', cluster)
-        args = ((CU.HDFS_SERVICE_NAME,),)
+        self.CU.get_service_by_role('NAMENODE', cluster)
+        args = ((self.CU.HDFS_SERVICE_NAME,),)
         self.assertEqual(args, mock_get_service.get_service.call_args)
 
         mock_get_service.reset_mock()
-        CU.get_service_by_role('JOBHISTORY', instance=inst)
-        args = ((CU.YARN_SERVICE_NAME,),)
+        self.CU.get_service_by_role('JOBHISTORY', instance=inst)
+        args = ((self.CU.YARN_SERVICE_NAME,),)
         self.assertEqual(args, mock_get_service.get_service.call_args)
 
         mock_get_service.reset_mock()
-        CU.get_service_by_role('OOZIE_SERVER', cluster)
-        args = ((CU.OOZIE_SERVICE_NAME,),)
+        self.CU.get_service_by_role('OOZIE_SERVER', cluster)
+        args = ((self.CU.OOZIE_SERVICE_NAME,),)
         self.assertEqual(args, mock_get_service.get_service.call_args)
 
-    def test_get_role_name(self):
-        inst_mock = mock.Mock()
-        inst_mock.hostname.return_value = 'spam-host'
-
-        self.assertEqual('eggs_spam_host',
-                         CU.pu.get_role_name(inst_mock, 'eggs'))
-
-    @mock.patch('sahara.plugins.cdh.cloudera_utils.ClouderaUtils.'
-                'get_cloudera_cluster')
-    def test_get_service_by_role(self, get_cloudera_cluster):
+    def test_get_service_by_role(self):
         class Ob(object):
+
             def get_service(self, x):
                 return x
-        get_cloudera_cluster.return_value = Ob()
+        self.CU.get_cloudera_cluster = mock.MagicMock(return_value=Ob())
         roles = ['NAMENODE', 'DATANODE', 'SECONDARYNAMENODE', 'HDFS_GATEWAY',
                  'RESOURCEMANAGER', 'NODEMANAGER', 'JOBHISTORY',
                  'YARN_GATEWAY', 'OOZIE_SERVER', 'HIVESERVER2',
@@ -83,11 +123,10 @@ class ClouderaUtilsTestCase(base.SaharaTestCase):
                  'yarn01', 'yarn01', 'oozie01', 'hive01', 'hive01', 'hive01',
                  'hue01', 'spark_on_yarn01', 'zookeeper01', 'hbase01',
                  'hbase01']
-        provider = cu.ClouderaUtilsV530()
         cluster = mock.Mock()
         for (role, resp) in zip(roles, resps):
             self.assertEqual(
-                resp, provider.get_service_by_role(role, cluster=cluster))
+                resp, self.CU.get_service_by_role(role, cluster=cluster))
 
         with testtools.ExpectedException(ValueError):
-            provider.get_service_by_role('cat', cluster=cluster)
+            self.CU.get_service_by_role('cat', cluster=cluster)
