@@ -18,7 +18,7 @@ from sahara import conductor
 from sahara import context
 from sahara.plugins.cdh import abstractversionhandler as avm
 from sahara.plugins.cdh.v5_4_0 import cloudera_utils as cu
-from sahara.plugins.cdh.v5_4_0 import config_helper as c_helper
+from sahara.plugins.cdh.v5_4_0 import config_helper
 from sahara.plugins.cdh.v5_4_0 import deploy as dp
 from sahara.plugins.cdh.v5_4_0 import edp_engine
 from sahara.plugins.cdh.v5_4_0 import plugin_utils as pu
@@ -29,6 +29,7 @@ conductor = conductor.API
 CU = cu.ClouderaUtilsV540()
 PU = pu.PluginUtilsV540()
 vl = validation.ValidatorV540
+c_helper = config_helper.ConfigHelperV540()
 
 
 class VersionHandler(avm.AbstractVersionHandler):
