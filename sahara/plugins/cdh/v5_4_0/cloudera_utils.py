@@ -17,7 +17,7 @@ from sahara.i18n import _
 from sahara.plugins.cdh import cloudera_utils as cu
 from sahara.plugins.cdh.v5_4_0 import config_helper as c_helper
 from sahara.plugins.cdh.v5_4_0 import plugin_utils as pu
-from sahara.plugins.cdh.v5_4_0 import validation as v
+from sahara.plugins.cdh.v5_4_0.validation import ValidatorV540 as v
 from sahara.swift import swift_helper
 from sahara.utils import cluster_progress_ops as cpo
 from sahara.utils import configs as s_cfg
