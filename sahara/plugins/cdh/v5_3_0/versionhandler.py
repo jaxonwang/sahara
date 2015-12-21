@@ -32,7 +32,7 @@ class VersionHandler(avm.BaseVersionHandler):
         self.PU = plugin_utils.PluginUtilsV530()
         self.dp = deploy
         self.edp_engine = edp_engine
-        self.vl = validation
+        self.vl = validation.ValidatorV530
         self.conductor = conductor.API
 
     def get_node_processes(self):
