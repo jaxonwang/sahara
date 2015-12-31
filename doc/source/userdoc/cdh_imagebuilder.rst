@@ -4,7 +4,7 @@ Building Images for Cloudera Plugin
 ===================================
 
 In this document you will find instructions on how to build Ubuntu and CentOS
-images with Cloudera Express (now only 5.0.0, 5.3.0 and 5.4.0 versions are
+images with Cloudera Express (now only 5.3.0 and 5.4.0 versions are
 supported).
 
 Apache Hadoop. To simplify the task of building such images we use
@@ -39,7 +39,7 @@ To create cloudera images follow these steps:
    specific operating system, you should use the "-i ubuntu|centos" parameter
    to assign the operating system (the cloudera plugin only supports Ubuntu and
    Centos). If you want to create the image only for a specific Cloudera
-   version, you should use the "-v 5.0|5.3|5.4" parameter to assign the
+   version, you should use the "-v 5.3|5.4" parameter to assign the
    version. Below is an example to create Cloudera images for both Ubuntu and
    CentOS with Cloudera Express 5.4.0 version.
 

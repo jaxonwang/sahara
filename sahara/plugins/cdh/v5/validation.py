@@ -13,9 +13,17 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+from sahara import exceptions as ex
+from sahara.i18n import _
 from sahara.plugins.cdh.v5 import plugin_utils as pu
 from sahara.plugins.cdh.validation import Validator
 
 
 class ValidatorV5(Validator):
     PU = pu.PluginUtilsV5()
+
+    @classmethod
+    def validate_cluster_creating(cls, cluster):
+        raise ex.DeprecatedException(
+            _("The CDH 5.0.0 plugin is now deprecated and will be removed"
+              " in a future release."))
