@@ -36,6 +36,7 @@ clusters:
         node_processes:
           - CLOUDERA_MANAGER
           - KMS
+          - OOZIE_SERVER
         auto_security_group: true
       - name: master-core
         flavor: ${medium_flavor_id}
@@ -50,7 +51,6 @@ clusters:
       - name: master-additional
         flavor: ${medium_flavor_id}
         node_processes:
-          - OOZIE_SERVER
           - YARN_JOBHISTORY
           - YARN_NODEMANAGER
           - HDFS_SECONDARYNAMENODE
@@ -81,3 +81,4 @@ clusters:
       - mapreduce_streaming_job
       - java_job
       - spark_wordcount
+    timeout_poll_cluster_status: 3600
