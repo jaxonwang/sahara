@@ -605,7 +605,12 @@ class BaseTestCase(base.BaseTestCase):
                 if status == CLUSTER_STATUS_ACTIVE:
                     break
                 if status == CLUSTER_STATUS_ERROR:
-                    raise exc.TempestException("Cluster in %s state" % status)
+                    cluster = self.sahara.get_cluster(cluster_id)
+                    failure_desc = cluster.status_description
+                    message = "Cluster in %s state:\n%s" % (status,
+                            failure_desc)
+
+                    raise exc.TempestException(message)
                 time.sleep(3)
 
     def _run_command_on_node(self, node_ip, command):
