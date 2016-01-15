@@ -15,7 +15,7 @@
 
 from sahara.i18n import _
 from sahara.plugins.cdh import commands as cmd
-from sahara.plugins.cdh.v5_4_0 import cloudera_utils as cu
+from sahara.plugins.cdh.v5_5_0 import cloudera_utils as cu
 from sahara.plugins import utils as gu
 from sahara.service.edp import hdfs_helper as h
 from sahara.utils import cluster_progress_ops as cpo
@@ -59,7 +59,7 @@ PACKAGES = [
     'zookeeper'
 ]
 
-CU = cu.ClouderaUtilsV540()
+CU = cu.ClouderaUtilsV550()
 
 
 def configure_cluster(cluster):

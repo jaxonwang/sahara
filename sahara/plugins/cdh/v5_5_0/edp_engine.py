@@ -15,7 +15,7 @@
 
 from sahara.plugins.cdh import confighints_helper as ch_helper
 from sahara.plugins.cdh import edp_engine
-from sahara.plugins.cdh.v5_4_0 import cloudera_utils as cu
+from sahara.plugins.cdh.v5_5_0 import cloudera_utils as cu
 from sahara.service.edp.oozie import engine as oozie_engine
 from sahara.utils import edp
 
@@ -24,7 +24,7 @@ class EdpOozieEngine(edp_engine.EdpOozieEngine):
 
     def __init__(self, cluster):
         super(EdpOozieEngine, self).__init__(cluster)
-        self.CU = cu.ClouderaUtilsV540()
+        self.CU = cu.ClouderaUtilsV550()
 
     def get_name_node_uri(self, cluster):
         if len(self.CU.pu.get_jns(cluster)) > 0:
@@ -37,15 +37,15 @@ class EdpOozieEngine(edp_engine.EdpOozieEngine):
     def get_possible_job_config(job_type):
         if edp.compare_job_type(job_type, edp.JOB_TYPE_HIVE):
             return {'job_config': ch_helper.get_possible_hive_config_from(
-                    'plugins/cdh/v5_4_0/resources/hive-site.xml')}
+                    'plugins/cdh/v5_5_0/resources/hive-site.xml')}
         if edp.compare_job_type(job_type,
                                 edp.JOB_TYPE_MAPREDUCE,
                                 edp.JOB_TYPE_MAPREDUCE_STREAMING):
             return {'job_config': ch_helper.get_possible_mapreduce_config_from(
-                    'plugins/cdh/v5_4_0/resources/mapred-site.xml')}
+                    'plugins/cdh/v5_5_0/resources/mapred-site.xml')}
         if edp.compare_job_type(job_type, edp.JOB_TYPE_PIG):
             return {'job_config': ch_helper.get_possible_pig_config_from(
-                    'plugins/cdh/v5_4_0/resources/mapred-site.xml')}
+                    'plugins/cdh/v5_5_0/resources/mapred-site.xml')}
         return oozie_engine.OozieJobEngine.get_possible_job_config(job_type)
 
 

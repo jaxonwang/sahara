@@ -18,8 +18,8 @@ from sahara.plugins import provisioning as p
 from sahara.utils import files as f
 
 
-class ConfigHelperV540(c_h.ConfigHelper):
-    path_to_config = 'plugins/cdh/v5_4_0/resources/'
+class ConfigHelperV550(c_h.ConfigHelper):
+    path_to_config = 'plugins/cdh/v5_5_0/resources/'
 
     CDH5_UBUNTU_REPO = (
         'deb [arch=amd64] http://archive.cloudera.com/cdh5'
@@ -122,13 +122,13 @@ class ConfigHelperV540(c_h.ConfigHelper):
                                      default_value=True)
 
     def __init__(self):
-        super(ConfigHelperV540, self).__init__()
+        super(ConfigHelperV550, self).__init__()
         self.priority_one_confs = self._load_json(
             self.path_to_config + 'priority-one-confs.json')
         self._init_all_ng_plugin_configs()
 
     def _get_cluster_plugin_configs(self):
-        confs = super(ConfigHelperV540, self)._get_ng_plugin_configs()
+        confs = super(ConfigHelperV550, self)._get_ng_plugin_configs()
         confs += [self.EXECUTOR_EXTRA_CLASSPATH,
                   self.KMS_REPO_URL,
                   self.KMS_REPO_KEY_URL,

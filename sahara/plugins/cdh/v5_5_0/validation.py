@@ -14,18 +14,18 @@
 # limitations under the License.
 
 from sahara.i18n import _
-from sahara.plugins.cdh.v5_4_0 import plugin_utils as pu
+from sahara.plugins.cdh.v5_5_0 import plugin_utils as pu
 from sahara.plugins.cdh import validation
 from sahara.plugins import exceptions as ex
 from sahara.plugins import utils as u
 
 
-class ValidatorV540(validation.Validator):
-    PU = pu.PluginUtilsV540()
+class ValidatorV550(validation.Validator):
+    PU = pu.PluginUtilsV550()
 
     @classmethod
     def validate_cluster_creating(cls, cluster):
-        super(ValidatorV540, cls).validate_cluster_creating(cluster)
+        super(ValidatorV550, cls).validate_cluster_creating(cluster)
         cls._hdfs_ha_validation(cluster)
         cls._yarn_ha_validation(cluster)
         cls._flume_validation(cluster)

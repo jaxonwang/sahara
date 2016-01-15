@@ -18,18 +18,18 @@ from oslo_log import log as logging
 from sahara.conductor import resource as res
 from sahara.plugins.cdh import commands as cmd
 from sahara.plugins.cdh import plugin_utils as pu
-from sahara.plugins.cdh.v5_4_0 import config_helper
-from sahara.plugins.cdh.v5_4_0 import db_helper
+from sahara.plugins.cdh.v5_5_0 import config_helper
+from sahara.plugins.cdh.v5_5_0 import db_helper
 from sahara.plugins import utils as u
 
 
 LOG = logging.getLogger(__name__)
 
 
-class PluginUtilsV540(pu.AbstractPluginUtils):
+class PluginUtilsV550(pu.AbstractPluginUtils):
 
     def __init__(self):
-        self.c_helper = config_helper.ConfigHelperV540()
+        self.c_helper = config_helper.ConfigHelperV550()
         self.db_helper = db_helper
 
     def get_role_name(self, instance, service):
@@ -157,7 +157,7 @@ class PluginUtilsV540(pu.AbstractPluginUtils):
         return self._get_config_value(service, name, configs, cluster)
 
     def _configure_repo_from_inst(self, instance):
-        super(PluginUtilsV540, self)._configure_repo_from_inst(instance)
+        super(PluginUtilsV550, self)._configure_repo_from_inst(instance)
 
         cluster = instance.cluster
         with instance.remote() as r:

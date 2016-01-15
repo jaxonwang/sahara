@@ -16,23 +16,23 @@
 
 from sahara import conductor
 from sahara.plugins.cdh import abstractversionhandler as avm
-from sahara.plugins.cdh.v5_4_0 import cloudera_utils
-from sahara.plugins.cdh.v5_4_0 import config_helper
-from sahara.plugins.cdh.v5_4_0 import deploy
-from sahara.plugins.cdh.v5_4_0 import edp_engine
-from sahara.plugins.cdh.v5_4_0 import plugin_utils
-from sahara.plugins.cdh.v5_4_0 import validation
+from sahara.plugins.cdh.v5_5_0 import cloudera_utils
+from sahara.plugins.cdh.v5_5_0 import config_helper
+from sahara.plugins.cdh.v5_5_0 import deploy
+from sahara.plugins.cdh.v5_5_0 import edp_engine
+from sahara.plugins.cdh.v5_5_0 import plugin_utils
+from sahara.plugins.cdh.v5_5_0 import validation
 
 
 class VersionHandler(avm.BaseVersionHandler):
 
     def __init__(self):
         self.c_helper = config_helper
-        self.CU = cloudera_utils.ClouderaUtilsV540()
-        self.PU = plugin_utils.PluginUtilsV540()
+        self.CU = cloudera_utils.ClouderaUtilsV550()
+        self.PU = plugin_utils.PluginUtilsV550()
         self.dp = deploy
         self.edp_engine = edp_engine
-        self.vl = validation.ValidatorV540
+        self.vl = validation.ValidatorV550
         self.conductor = conductor.API
 
     def get_node_processes(self):

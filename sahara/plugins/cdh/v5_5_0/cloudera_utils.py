@@ -15,9 +15,9 @@
 
 from sahara.i18n import _
 from sahara.plugins.cdh import cloudera_utils as cu
-from sahara.plugins.cdh.v5_4_0 import config_helper
-from sahara.plugins.cdh.v5_4_0 import plugin_utils as pu
-from sahara.plugins.cdh.v5_4_0 import validation
+from sahara.plugins.cdh.v5_5_0 import config_helper
+from sahara.plugins.cdh.v5_5_0 import plugin_utils as pu
+from sahara.plugins.cdh.v5_5_0 import validation
 from sahara.swift import swift_helper
 from sahara.utils import cluster_progress_ops as cpo
 from sahara.utils import configs as s_cfg
@@ -40,10 +40,10 @@ KS_INDEXER_SERVICE_TYPE = 'KS_INDEXER'
 IMPALA_SERVICE_TYPE = 'IMPALA'
 KMS_SERVICE_TYPE = 'KMS'
 
-c_helper = config_helper.ConfigHelperV540()
+c_helper = config_helper.ConfigHelperV550()
 
 
-class ClouderaUtilsV540(cu.ClouderaUtils):
+class ClouderaUtilsV550(cu.ClouderaUtils):
     FLUME_SERVICE_NAME = 'flume01'
     SOLR_SERVICE_NAME = 'solr01'
     SQOOP_SERVICE_NAME = 'sqoop01'
@@ -56,8 +56,8 @@ class ClouderaUtilsV540(cu.ClouderaUtils):
 
     def __init__(self):
         cu.ClouderaUtils.__init__(self)
-        self.pu = pu.PluginUtilsV540()
-        self.validator = validation.ValidatorV540
+        self.pu = pu.PluginUtilsV550()
+        self.validator = validation.ValidatorV550
 
     def get_service_by_role(self, role, cluster=None, instance=None):
         cm_cluster = None
@@ -87,7 +87,7 @@ class ClouderaUtilsV540(cu.ClouderaUtils):
         elif role in ['YARN_STANDBYRM']:
             return cm_cluster.get_service(self.YARN_SERVICE_NAME)
         else:
-            return super(ClouderaUtilsV540, self).get_service_by_role(
+            return super(ClouderaUtilsV550, self).get_service_by_role(
                 role, cluster, instance)
 
     @cpo.event_wrapper(
