@@ -51,7 +51,7 @@ class EdpOozieEngine(edp_engine.EdpOozieEngine):
 
 class EdpSparkEngine(edp_engine.EdpSparkEngine):
 
-    edp_base_version = "5.4.0"
+    edp_base_version = "5.5.0"
 
     def __init__(self, cluster):
         super(EdpSparkEngine, self).__init__(cluster)
