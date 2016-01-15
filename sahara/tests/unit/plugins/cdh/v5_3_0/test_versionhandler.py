@@ -32,22 +32,11 @@ class VersionHandlerTestCase(base.SaharaTestCase):
         super(VersionHandlerTestCase, self).setUp()
         self.vh = versionhandler.VersionHandler()
 
-    @mock.patch(plugin_path + "config_helper.get_plugin_configs")
-    def test_get_plugin_configs(self, get_plugin_configs):
-        self.vh.get_plugin_configs()
-        get_plugin_configs.assert_called_once_with()
-
     def test_get_node_processes(self):
         processes = self.vh.get_node_processes()
         for k, v in six.iteritems(processes):
             for p in v:
                 self.assertIsInstance(p, str)
-
-    @mock.patch(plugin_path + "validation.validate_cluster_creating")
-    def test_validate(self, validate_cluster_creating):
-        cluster = mock.Mock()
-        self.vh.validate(cluster)
-        validate_cluster_creating.assert_called_once_with(cluster)
 
     @mock.patch("sahara.conductor.API.cluster_update")
     @mock.patch("sahara.context.ctx")
@@ -78,16 +67,6 @@ class VersionHandlerTestCase(base.SaharaTestCase):
         self.vh.decommission_nodes(cluster, instances)
         decommission_cluster.assert_called_once_with(cluster,
                                                      instances)
-
-    @mock.patch(plugin_path + "validation.validate_existing_ng_scaling")
-    @mock.patch(plugin_path + "validation.validate_additional_ng_scaling")
-    def test_validate_scaling(self, additional_validate, existing_validate):
-        cluster = mock.Mock()
-        existing = mock.Mock()
-        additional = mock.Mock()
-        self.vh.validate_scaling(cluster, existing, additional)
-        existing_validate.assert_called_once_with(cluster, existing)
-        additional_validate.assert_called_once_with(cluster, additional)
 
     @mock.patch(plugin_path + "deploy.scale_cluster")
     def test_scale_cluster(self, scale_cluster):

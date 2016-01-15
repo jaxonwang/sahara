@@ -27,7 +27,7 @@ from sahara.plugins.cdh.v5_4_0 import validation
 class VersionHandler(avm.BaseVersionHandler):
 
     def __init__(self):
-        self.c_helper = config_helper
+        self.c_helper = config_helper.ConfigHelperV540()
         self.CU = cloudera_utils.ClouderaUtilsV540()
         self.PU = plugin_utils.PluginUtilsV540()
         self.dp = deploy
