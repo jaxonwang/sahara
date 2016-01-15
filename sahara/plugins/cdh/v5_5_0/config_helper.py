@@ -23,23 +23,23 @@ class ConfigHelperV550(c_h.ConfigHelper):
 
     CDH5_UBUNTU_REPO = (
         'deb [arch=amd64] http://archive.cloudera.com/cdh5'
-        '/ubuntu/precise/amd64/cdh precise-cdh5.5.0 contrib'
+        '/ubuntu/trusty/amd64/cdh trusty-cdh5.5.0 contrib'
         '\ndeb-src http://archive.cloudera.com/cdh5/ubuntu'
-        '/precise/amd64/cdh precise-cdh5.5.0 contrib')
+        '/trusty/amd64/cdh trusty-cdh5.5.0 contrib')
 
     DEFAULT_CDH5_UBUNTU_REPO_KEY_URL = (
         'http://archive.cloudera.com/cdh5/ubuntu'
-        '/precise/amd64/cdh/archive.key')
+        '/trusty/amd64/cdh/archive.key')
 
     CM5_UBUNTU_REPO = (
         'deb [arch=amd64] http://archive.cloudera.com/cm5'
-        '/ubuntu/precise/amd64/cm precise-cm5.5.0 contrib'
+        '/ubuntu/trusty/amd64/cm trusty-cm5.5.0 contrib'
         '\ndeb-src http://archive.cloudera.com/cm5/ubuntu'
-        '/precise/amd64/cm precise-cm5.5.0 contrib')
+        '/trusty/amd64/cm trusty-cm5.5.0 contrib')
 
     DEFAULT_CM5_UBUNTU_REPO_KEY_URL = (
         'http://archive.cloudera.com/cm5/ubuntu'
-        '/precise/amd64/cm/archive.key')
+        '/trusty/amd64/cm/archive.key')
 
     CDH5_CENTOS_REPO = (
         '[cloudera-cdh5]'
@@ -61,13 +61,13 @@ class ConfigHelperV550(c_h.ConfigHelper):
 
     KEY_TRUSTEE_UBUNTU_REPO_URL = (
         'http://archive.cloudera.com/navigator-'
-        'keytrustee5/ubuntu/precise/amd64/navigator-'
+        'keytrustee5/ubuntu/trusty/amd64/navigator-'
         'keytrustee/cloudera.list')
 
     DEFAULT_KEY_TRUSTEE_UBUNTU_REPO_KEY_URL = (
         'http://archive.cloudera.com/'
         'navigator-keytrustee5/ubuntu/'
-        'precise/amd64/navigator-keytrustee'
+        'trusty/amd64/navigator-keytrustee'
         '/archive.key')
 
     KEY_TRUSTEE_CENTOS_REPO_URL = (
