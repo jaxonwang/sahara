@@ -1,5 +1,11 @@
 [
     {
+        "desc": "Whether to suppress configuration warnings produced by the built-in parameter validation for the Java Configuration Options for Balancer parameter.",
+        "display_name": "Suppress Parameter Validation: Java Configuration Options for Balancer",
+        "name": "role_config_suppression_balancer_java_opts",
+        "value": "false"
+    },
+    {
         "desc": "These arguments will be passed as part of the Java command line. Commonly, garbage collection flags or extra debugging flags would be passed here.",
         "display_name": "Java Configuration Options for Balancer",
         "name": "balancer_java_opts",
@@ -12,7 +18,7 @@
         "value": "{\n  \"version\": \"0\",\n  \"rules\": [\n    {\"alert\": false, \"rate\": 1, \"periodminutes\": 1, \"threshold\":\"FATAL\"},\n    {\"alert\": false, \"rate\": 0, \"threshold\":\"WARN\", \"content\": \".* is deprecated. Instead, use .*\"},\n    {\"alert\": false, \"rate\": 0, \"threshold\":\"WARN\", \"content\": \".* is deprecated. Use .* instead\"},\n    {\"alert\": false, \"rate\": 0, \"exceptiontype\": \"java.io.IOException\"},\n    {\"alert\": false, \"rate\": 0, \"exceptiontype\": \"java.net.SocketException\"},\n    {\"alert\": false, \"rate\": 0, \"exceptiontype\": \"java.net.SocketClosedException\"},\n    {\"alert\": false, \"rate\": 0, \"exceptiontype\": \"java.io.EOFException\"},\n    {\"alert\": false, \"rate\": 0, \"exceptiontype\": \"java.nio.channels.CancelledKeyException\"},\n    {\"alert\": false, \"rate\": 1, \"periodminutes\": 2, \"exceptiontype\": \".*\"},\n    {\"alert\": false, \"rate\": 0, \"threshold\":\"WARN\", \"content\":\"Unknown job [^ ]+ being deleted.*\"},\n    {\"alert\": false, \"rate\": 0, \"threshold\":\"WARN\", \"content\":\"Error executing shell command .+ No such process.+\"},\n    {\"alert\": false, \"rate\": 0, \"threshold\":\"WARN\", \"content\":\".*attempt to override final parameter.+\"},\n    {\"alert\": false, \"rate\": 0, \"threshold\":\"WARN\", \"content\":\"[^ ]+ is a deprecated filesystem name. Use.*\"},\n    {\"alert\": false, \"rate\": 1, \"periodminutes\": 1, \"threshold\":\"WARN\"}\n  ]\n}\n"
     },
     {
-        "desc": "For advanced use only, a string to be inserted into <strong>hdfs-site.xml</strong> for this role only.",
+        "desc": "For advanced use only. A string to be inserted into <strong>hdfs-site.xml</strong> for this role only.",
         "display_name": "Balancer Advanced Configuration Snippet (Safety Valve) for hdfs-site.xml",
         "name": "balancer_config_safety_valve",
         "value": null
@@ -30,9 +36,21 @@
         "value": "10.0"
     },
     {
+        "desc": "Whether to suppress configuration warnings produced by the built-in parameter validation for the Balancer Advanced Configuration Snippet (Safety Valve) for hdfs-site.xml parameter.",
+        "display_name": "Suppress Parameter Validation: Balancer Advanced Configuration Snippet (Safety Valve) for hdfs-site.xml",
+        "name": "role_config_suppression_balancer_config_safety_valve",
+        "value": "false"
+    },
+    {
         "desc": "When set, Cloudera Manager will send alerts when this entity's configuration changes.",
         "display_name": "Enable Configuration Change Alerts",
         "name": "enable_config_alerts",
+        "value": "false"
+    },
+    {
+        "desc": "Whether to suppress configuration warnings produced by the built-in parameter validation for the Rules to Extract Events from Log Files parameter.",
+        "display_name": "Suppress Parameter Validation: Rules to Extract Events from Log Files",
+        "name": "role_config_suppression_log_event_whitelist",
         "value": "false"
     },
     {
@@ -40,5 +58,11 @@
         "display_name": "Java Heap Size of Balancer in Bytes",
         "name": "balancer_java_heapsize",
         "value": "1073741824"
+    },
+    {
+        "desc": "Whether to suppress configuration warnings produced by the CDH Version Validator configuration validator.",
+        "display_name": "Suppress Configuration Validator: CDH Version Validator",
+        "name": "role_config_suppression_cdh_version_validator",
+        "value": "false"
     }
 ]
